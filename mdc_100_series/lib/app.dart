@@ -18,8 +18,24 @@ import 'colors.dart';
 import 'home.dart';
 import 'login.dart';
 import 'supplemental/cut_corners_border.dart';
+import 'backdrop.dart';
+import 'colors.dart';
+import 'home.dart';
+import 'login.dart';
+import 'category_menu_page.dart';
+import 'model/product.dart';
+import 'supplemental/cut_corners_border.dart';
 
 // TODO: Convert ShrineApp to stateful widget (104)
+class _ShrineAppState extends State<ShrineApp> {
+  Category _currentCategory = Category.all;
+
+  void _onCategoryTap(Category category) {
+    setState(() {
+      _currentCategory = category;
+    });
+  }
+
 class ShrineApp extends StatelessWidget {
   const ShrineApp({Key? key}) : super(key: key);
 
@@ -34,7 +50,19 @@ class ShrineApp extends StatelessWidget {
         // TODO: Pass _currentCategory for frontLayer (104)
         frontLayer: HomePage(),
         // TODO: Change backLayer field value to CategoryMenuPage (104)
-        backLayer: Container(color: kShrinePink100),
+  home: Backdrop(
+  // TODO: Make currentCategory field take _currentCategory (104)
+  currentCategory: _currentCategory,
+  // TODO: Pass _currentCategory for frontLayer (104)
+  frontLayer: HomePage(),
+  // TODO: Change backLayer field value to CategoryMenuPage (104)
+  backLayer: CategoryMenuPage(
+  currentCategory: _currentCategory,
+  onCategoryTap: _onCategoryTap,
+  ),
+  frontTitle: Text('SHRINE'),
+  backTitle: Text('MENU'),
+  ),
         frontTitle: Text('SHRINE'),
         backTitle: Text('MENU'),
       ),
